@@ -2,6 +2,7 @@ import { FabricImage, IText } from 'fabric'
 import { useEffect, useState } from 'react';
 import Loader from '../loader';
 import Swal from 'sweetalert2';
+import mergeImages from "merge-images";
 
 export default function Tools({ configs, setConfigs, productId, canvas, setImage, setShowAlbum }) {
 
@@ -26,6 +27,66 @@ export default function Tools({ configs, setConfigs, productId, canvas, setImage
 
 	}, [productId]);
 
+	function b64tob(b64){
+		const byteCharacters = atob(b64);
+		const byteArrays = [];
+
+		for (let i = 0; i < byteCharacters.length; i++) {
+			byteArrays.push(byteCharacters.charCodeAt(i));
+		}
+
+		const byteArray = new Uint8Array(byteArrays);
+		return byteArray;
+	}
+
+	function downloadImage(){
+		let canvas_exportwidth = 300;
+		let canvas_review_width = 250;
+
+		let b64 = canvas.toDataURL({
+			format: 'png',
+		})
+
+		console.log(b64.split(',')[1])
+		let url = URL.createObjectURL(new Blob([b64tob(b64.split(',')[1])]))
+
+		document.getElementById('bgimage').origin = 'anonymous'
+
+		try{
+			mergeImages([
+				{
+					src : document.getElementById('bgimage').src,
+					x : 0,
+					y : 0
+				},
+				{
+					src : url,
+					x : 250 - 150,
+					y : 250 - 150
+				}
+			], {
+				crossOrigin: 'anonymous',
+			}).then(b64 => {
+				let link = document.createElement('a');
+				link.href = b64
+				link.download = 'image.png'
+				link.style.display = 'none'
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+
+			})
+		}catch(e){
+			Swal.fire({
+				title: 'Error 2',
+				text: e.message,
+				icon: 'error'
+			})
+		}
+
+
+
+	}
 
 	const addText = (text) => {
 		canvas.add(new IText(text));
@@ -171,7 +232,7 @@ export default function Tools({ configs, setConfigs, productId, canvas, setImage
 					<i className="bi bi-file-earmark-image"></i> download design
 				</button>
 
-				<button className="px-2 py-1 border rounded border-sky-800 hover:bg-slate-100 duration-200 shadow-md ease-in-out">
+				<button onClick={downloadImage} className="px-2 py-1 border rounded border-sky-800 hover:bg-slate-100 duration-200 shadow-md ease-in-out">
 					<i className="bi bi-file-earmark-image"></i> download image
 				</button>
 

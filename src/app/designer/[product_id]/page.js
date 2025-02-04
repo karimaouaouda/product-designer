@@ -64,6 +64,7 @@ export default  function Home({params}) {
     if(!canvas){
       setCanvas(new Canvas(canvasEl.current, {
         preserveObjectStacking: true,
+        selectionBorderColor: 'yellow',
         zoomEnabled: true,
         width : configs.default.canvas.width,
         height : configs.default.canvas.height
@@ -98,6 +99,13 @@ export default  function Home({params}) {
       setShowUploadImageForm(false);
 
       //add the new wimage to the container
+    }).catch(function(err){
+      Swal.fire({
+        title: 'Error',
+        text: 'Something went wrong : ' + err.message,
+        icon : 'error',
+        timer : 3500
+      })
     })
   }
 

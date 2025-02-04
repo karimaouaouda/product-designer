@@ -109,7 +109,7 @@ export default function Board({configs, canvas, setCanvas, canvasEl, image}) {
     <div className='w-full h-screen col-span-2 flex relative justify-center items-center'>
 		{!image || (
 			<div  className='w-full h-full absolute'>
-				<img width={configs.default.image_size.width ??'100%'} height={configs.default.image_size.height ??'100%'} src={image.src} alt='product' className='object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
+				<img id={'bgimage'} width={configs.default.image_size.width ??'100%'} height={configs.default.image_size.height ??'100%'} src={image.src} alt='product' className='object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
 			</div>
 		)}
 		<div  className='absolute top-0 left-1/2 -translate-x-1/2 p-2  flex justify-center gap-2'>
