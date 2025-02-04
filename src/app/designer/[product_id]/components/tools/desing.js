@@ -11,9 +11,13 @@ export default function Tools({ configs, setConfigs, productId, canvas, setImage
 		console.log(configs)
 		if (!product && productId) {
 			async function fetchProduct() {
-				const res = await fetch('http://store.test/api/products/' + productId)
-				const data = await res.json()
-				setProduct(data)
+				try{
+					const res = await fetch('http://store.test/api/products/' + productId)
+					const data = await res.json()
+					setProduct(data)
+				}catch(e){
+					console.error(e)
+				}
 			}
 
 			fetchProduct();
@@ -61,7 +65,7 @@ export default function Tools({ configs, setConfigs, productId, canvas, setImage
 		}
 	}
 
-	function downloadDesign() {
+	function downloadDesign(e) {
 		var link = document.createElement('a');
 		var canvas_exportwidth = 1000;
 		var canvas_review_width = 250;
