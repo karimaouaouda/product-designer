@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    'API_URL': 'https://store.test/api',
+    API_END_POINT : "http://store.test/api",
     images: {
         remotePatterns: [
           {
