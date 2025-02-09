@@ -1,5 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./../../globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,15 +18,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-      <html lang="en">
-        <head>
-          <link href="http://store.test/storage/fonts/user_1/fonts.css" rel="stylesheet"/>
-        </head>
-        <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased `}
-        >
-        {children}
-        </body>
-      </html>
+    <div id="app" className="w-screen h-screen flex overflow-hidden relative">
+          {children}
+      </div>
   );
 }
