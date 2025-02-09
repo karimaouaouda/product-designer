@@ -99,6 +99,26 @@ export default  function Home({params}) {
     }
   }, [canvas, configs]);
 
+  function removeDesign(index){
+    Swal.fire({
+      title : 'are u sure!',
+      text : 'are u want to delete this design ?',
+      icon : 'question',
+      showConfirmButton : true,
+      confirmButtonColor: 'red',
+      confirmButtonText : 'delete',
+      showCancelButton : true
+    }).then(response => {
+      if(response.isConfirmed){
+        Swal.fire({
+          title : 'deleted',
+          text : 'design deleted successfully',
+          icon : 'success'
+        })
+      }
+    })
+  }
+
   function uploadImage(e){
     let name = document.getElementById('name').value;
     let image = document.getElementById('image').files[0];
@@ -245,6 +265,8 @@ export default  function Home({params}) {
               {designs ? designs.map((design, index) => (
                 <div key={index} className="relative w-40 h-40 rounded shadow-sm border hover:scale-105 duration-300 ease-in-out cursor-pointer">
                   <NextImage onClick={() => importDesign(index)} data-index={index} crossOrigin="anonymous" sizes="200px" src={design.preview_url} alt={design.name} layout="fill" objectFit="cover"/>
+
+                  <i className="bi bi-trash w-6 h-6 absolute top-2 right-2 rounded bg-red-500/75 shadow flex justify-center items-center hover:bg-red-500/50 duration-300 text-white" onClick={() => removeDesign(index)}></i>
                 </div>
               )) : <Loader/>}
             </div>
